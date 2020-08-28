@@ -268,13 +268,6 @@ function GetTeamMembers(...)
     return unpack(teams)
 end
 
-local cops, pris, skids, crims = GetTeamMembers("Guards", "Inmates", "Neutral", "Criminals")
-
-local CopAmount = #cops
-local prisamount = #pris
-local skidamount = #skids
-local crimamount = #crims
-
 local plrs = game:GetService("Players")
 local lplr = plrs.LocalPlayer
 local function RemoveSpaces(String)
