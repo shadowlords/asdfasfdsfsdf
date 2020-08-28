@@ -5698,7 +5698,7 @@ local function AOZY_fake_script() -- commandbox.LocalScript
 	game.Players.LocalPlayer:GetMouse().KeyDown:connect(function(Key)
 		if Key == ";" then
 			script.Parent:CaptureFocus()
-			wait(0.2)
+			wait(0.05)
 			script.Parent.Text = ""
 		end
 	end)
