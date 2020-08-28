@@ -250,24 +250,6 @@ local response = syn.request(
 );
 end
 
-function GetTeamMembers(...)
-    local teams = {}
-    for _, teamName in pairs{...} do
-        local team = game.Teams:FindFirstChild(teamName)
-        if team then
-            local playersOnTeam = {}
-            local teamColor = team.TeamColor
-            for i, player in pairs(game.Players:GetPlayers()) do
-                if player.TeamColor == teamColor then
-                    table.insert(playersOnTeam, player.Name)
-                end
-            end
-            table.insert(teams, playersOnTeam)
-        end
-    end
-    return unpack(teams)
-end
-
 local plrs = game:GetService("Players")
 local lplr = plrs.LocalPlayer
 local function RemoveSpaces(String)
