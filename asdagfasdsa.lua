@@ -2420,7 +2420,7 @@ local function EJTAI_fake_script() -- ScreenGui.rejoin.LocalScript
 		syn.queue_on_teleport([[
 					game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
 					repeat wait(.1) until game:GetService('Players').LocalPlayer
-					loadstring(game:HttpGet("https://raw.githubusercontent.com/shadowlords/asdfasfdsfsdf/master/asdhasd.lua", true))()
+					loadstring(game:HttpGet("https://raw.githubusercontent.com/shadowlords/asdfasfdsfsdf/master/asdagfasdsa.lua", true))()
 				]])
 	end
 		game.TeleportService:Teleport(game.PlaceId, game.Players.LocalPlayer)
