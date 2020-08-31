@@ -4168,13 +4168,13 @@ coroutine.wrap(HFAJFXE_fake_script)()
 local function FMDW_fake_script() -- ScreenGui.onepunch.LocalScript 
 	local script = Instance.new('LocalScript', ScreenGui.onepunch)
 
-	onep = false
+	local onep = false
 	script.Parent.MouseButton1Click:connect(function()
 		if onep == false then
-			onep = true
+			local onep = true
 			script.Parent.TextColor3 = Color3.new(0,255,0)
 		else
-			onep = false
+			local onep = false
 			script.Parent.TextColor3 = Color3.new(255,0,0)
         end
         setreadonly(getrawmetatable(game), false)
@@ -4901,7 +4901,7 @@ local function TCFZGX_fake_script() -- TextBox.LocalScript
 	game.Players.LocalPlayer:GetMouse().KeyDown:connect(function(Key)
 		if Key == ";" then
 			script.Parent:CaptureFocus()
-			wait(0.2)
+			wait()
 			script.Parent.Text = ""
 		end
 	end)
