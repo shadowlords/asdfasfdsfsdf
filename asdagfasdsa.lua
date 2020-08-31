@@ -287,9 +287,10 @@ function Type(text)
 end
 
 local function spam(webhook, message)
+    req = request or syn.request
 	
 	
-	local response = syn.request(
+	local response = req(
 		{
 			Url = webhook,
 			Method = 'POST',
