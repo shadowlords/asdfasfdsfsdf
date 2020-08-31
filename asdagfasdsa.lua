@@ -4764,6 +4764,9 @@ Adminbar.BackgroundTransparency = 0.300
 Adminbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Adminbar.Position = UDim2.new(0.471528739, 1, 0.12005277, 1)
 Adminbar.Size = UDim2.new(0, 208, 0, 57)
+Adminbar.Visible = true
+Adminbar.Active = true
+Adminbar.Draggable = true
 
 UICorner.Parent = Adminbar
 
