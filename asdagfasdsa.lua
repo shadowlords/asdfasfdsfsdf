@@ -5148,11 +5148,11 @@ local function TCFZGX_fake_script() -- TextBox.LocalScript
 				end
 			elseif string.sub(script.Parent.Text, 1, 9) == "loopkill " then
 				for i,v in pairs(GetPlayer(string.sub(script.Parent.Text, 10))) do
-					z = 1
+					i = 1
 					repeat
 						workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
 						rape(v)
-					until z == 0
+					until i == 0
 				end
 			elseif string.sub(script.Parent.Text, 1, 7) == "arrest " then
 				for i,v in pairs(GetPlayer(string.sub(script.Parent.Text, 8))) do
