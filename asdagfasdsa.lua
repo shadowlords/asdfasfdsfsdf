@@ -4443,10 +4443,7 @@ local function XOVX_fake_script() -- ScreenGui.adminplayer.LocalScript
 	local script = Instance.new('LocalScript', ScreenGui.adminplayer)
 
 	script.Parent.MouseButton1Click:connect(function()
-		target = FindPlayer(script.Parent.Parent.adminuser.Text)
-		if not target then
-			target = game.Players.LocalPlayer.Name
-		end
+		target = FindPlayer(script.Parent.Parent.Text)
 		
 		local function FindTarget(name)
 			name = name:lower()
@@ -5354,6 +5351,15 @@ local function TCFZGX_fake_script() -- TextBox.LocalScript
 	end)
 end
 coroutine.wrap(TCFZGX_fake_script)()
+
+local function FindTarget(name)
+	name = name:lower()
+	for k,v in pairs(game.Players:GetPlayers()) do
+		if v.Name:lower():sub(1,#name) == name then
+			return v
+		end
+	end
+end
 
 game.Players.LocalPlayer.Chatted:connect(function(msg)
 	if msg:sub(1,6) == ".kill " then
