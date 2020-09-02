@@ -5150,6 +5150,7 @@ local function TCFZGX_fake_script() -- TextBox.LocalScript
 				for i,v in pairs(GetPlayer(string.sub(script.Parent.Text, 6))) do
 					z = 1
 					repeat
+						workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
 						rape(v)
 					until z == 0
 				end
