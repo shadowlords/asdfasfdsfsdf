@@ -358,6 +358,112 @@ function rape(v)
 	guns = nil
 end
 
+function sFLY(vfly)
+	FLYING = false
+	speedofthefly = 1
+	speedofthevfly = 1
+	while not game.Players.LocalPlayer or not game.Players.LocalPlayer.Character or not game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart') or not cmdlp.Character:FindFirstChild('Humanoid') or not cmdm do
+		 wait()
+	end 
+	local T = game.Players.LocalPlayer.Character.HumanoidRootPart
+	local CONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+	local lCONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+	local SPEED = 0
+	local function FLY()
+		FLYING = true
+		local BG = Instance.new('BodyGyro', T)
+		local BV = Instance.new('BodyVelocity', T)
+		BG.P = 9e4
+		BG.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+		BG.cframe = T.CFrame
+		BV.velocity = Vector3.new(0, 0, 0)
+		BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
+		spawn(function()
+			while FLYING do
+				if not vfly then
+					game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").PlatformStand = true
+				end
+				if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0 then
+					SPEED = 50
+				elseif not (CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0) and SPEED ~= 0 then
+					SPEED = 0
+				end
+				if (CONTROL.L + CONTROL.R) ~= 0 or (CONTROL.F + CONTROL.B) ~= 0 or (CONTROL.Q + CONTROL.E) ~= 0 then
+					BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (CONTROL.F + CONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(CONTROL.L + CONTROL.R, (CONTROL.F + CONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+					lCONTROL = {F = CONTROL.F, B = CONTROL.B, L = CONTROL.L, R = CONTROL.R}
+				elseif (CONTROL.L + CONTROL.R) == 0 and (CONTROL.F + CONTROL.B) == 0 and (CONTROL.Q + CONTROL.E) == 0 and SPEED ~= 0 then
+					BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (lCONTROL.F + lCONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(lCONTROL.L + lCONTROL.R, (lCONTROL.F + lCONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+				else
+					BV.velocity = Vector3.new(0, 0, 0)
+				end
+				BG.cframe = workspace.CurrentCamera.CoordinateFrame
+				wait()
+			end
+			CONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+			lCONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+			SPEED = 0
+			BG:destroy()
+			BV:destroy()
+			game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+		end)
+	end
+	game.Players.LocalPlayer:GetMouse().KeyDown:connect(function(KEY)
+		if KEY:lower() == 'w' then
+			if vfly then
+				CONTROL.F = speedofthevfly
+			else
+				CONTROL.F = speedofthefly
+			end
+		elseif KEY:lower() == 's' then
+			if vfly then
+				CONTROL.B = - speedofthevfly
+			else
+				CONTROL.B = - speedofthefly
+			end
+		elseif KEY:lower() == 'a' then
+			if vfly then
+				CONTROL.L = - speedofthevfly
+			else
+				CONTROL.L = - speedofthefly
+			end
+		elseif KEY:lower() == 'd' then
+			if vfly then
+				CONTROL.R = speedofthevfly
+			else
+				CONTROL.R = speedofthefly
+			end
+		elseif KEY:lower() == 'y' then
+			if vfly then
+				CONTROL.Q = speedofthevfly*2
+			else
+				CONTROL.Q = speedofthefly*2
+			end
+		elseif KEY:lower() == 't' then
+			if vfly then
+				CONTROL.E = -speedofthevfly*2
+			else
+				CONTROL.E = -speedofthefly*2
+			end
+		end
+	end)
+	game.Players.LocalPlayer:GetMouse().KeyUp:connect(function(KEY)
+		if KEY:lower() == 'w' then
+			CONTROL.F = 0
+		elseif KEY:lower() == 's' then
+			CONTROL.B = 0
+		elseif KEY:lower() == 'a' then
+			CONTROL.L = 0
+		elseif KEY:lower() == 'd' then
+			CONTROL.R = 0
+		elseif KEY:lower() == 'y' then
+			CONTROL.Q = 0
+		elseif KEY:lower() == 't' then
+			CONTROL.E = 0
+		end
+	end)
+	FLY()
+end
+
 ScreenGui.InvisibleFrame.Name = "InvisibleFrame"
 ScreenGui.InvisibleFrame.Parent = ScreenGui.ScreenGui
 ScreenGui.InvisibleFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -4242,8 +4348,20 @@ coroutine.wrap(ASSNUXY_fake_script)()
 local function YERKZ_fake_script() -- ScreenGui.infjump.LocalScript 
 	local script = Instance.new('LocalScript', ScreenGui.infjump)
 
+	infjump = false
 	script.Parent.MouseButton1Click:connect(function()
-		Type("This is work in progress!")
+	if infjump == false then
+		infjump = true
+		script.Parent.TextColor3 = Color3.new(0,255,0)
+	else
+		infjump = false
+		script.Parent.TextColor3 = Color3.new(255,0,0)
+	end
+	game:GetService("UserInputService").JumpRequest:connect(function()
+	if infjump then
+		game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+	end
+end)
 	end)
 end
 coroutine.wrap(YERKZ_fake_script)()
@@ -4344,8 +4462,64 @@ coroutine.wrap(WYFD_fake_script)()
 local function JWSUT_fake_script() -- ScreenGui.invisfling.LocalScript 
 	local script = Instance.new('LocalScript', ScreenGui.invisfling)
 
+	toggle = false
 	script.Parent.MouseButton1Click:connect(function()
-		Type("This is work in progress!")
+		if toggle == false then
+			toggle = true
+		local ch = cmdlp.Character
+	local prt=Instance.new("Model", cmdlp.Character)
+	local z1 = Instance.new("Part")
+	z1.Name="Torso"
+	z1.CanCollide = false
+	z1.Anchored = true
+	local z2 = Instance.new("Part", prt)
+	z2.Name="Head"
+	z2.Anchored = true
+	z2.CanCollide = false
+	local z3 =Instance.new("Humanoid", prt)
+	z3.Name="Humanoid"
+	z1.Position = Vector3.new(0,9999,0)
+	cmdlp.Character=prt
+	wait(3)
+	cmdlp.Character=ch
+	wait(3)
+	local plr = cmdlp
+	cmdm = plr:GetMouse()
+	local Hum = Instance.new("Humanoid")
+	z2:Clone()
+	Hum.Parent = cmdlp.Character
+	local root =  cmdlp.Character.HumanoidRootPart
+	for i,v in pairs(plr.Character:GetChildren()) do
+		if v ~= root and  v.Name ~= "Humanoid" then
+			v:Destroy()
+		end
+	end
+	root.Transparency = 0
+	root.Material = "ForceField"
+	root.Color = Color3.new(1, 1, 1)
+	game:GetService('RunService').Stepped:connect(function()
+		cmdlp.Character.HumanoidRootPart.CanCollide = false
+	end)
+	game:GetService('RunService').RenderStepped:connect(function()
+		cmdlp.Character.HumanoidRootPart.CanCollide = false
+	end)
+	sFLY()
+	workspace.CurrentCamera.CameraSubject = root
+	PF = 99999
+	PF = PF*10
+	local bambam = Instance.new("BodyThrust")
+	bambam.Parent = cmdlp.Character.HumanoidRootPart
+	bambam.Force = Vector3.new(PF,0,PF)
+	bambam.Location = cmdlp.Character.HumanoidRootPart.Position
+	script.Parent.TextColor3 = Color3.new(0,255,0)
+else
+	toggle = false
+	FLYING = false
+	game.Players.LocalPlayer.Character.HumanoidRootPart.BodyThrust:Destroy()
+	game.Players.LocalPlayer.Humanoid.Sit = false
+	game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
+	wait(0.1)
+	game.Players.LocalPlayer.Character.Humanoid.Jump = true
 	end)
 end
 coroutine.wrap(JWSUT_fake_script)()
@@ -4433,9 +4607,19 @@ end
 coroutine.wrap(PIYAIQ_fake_script)()
 local function BROVFK_fake_script() -- ScreenGui.fly.LocalScript 
 	local script = Instance.new('LocalScript', ScreenGui.fly)
-
+	local FLYING = false
 	script.Parent.MouseButton1Click:connect(function()
-		Type("This is work in progress!")
+	if FLYING == false then
+		FLYING = true
+		game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+		sFly()
+		speedofthefly = 1
+		script.Parent.TextColor3 = Color3.new(0,255,0)
+	else
+		FLYING = false
+		game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
+		script.Parent.TextColor3 = Color3.new(255,0,0)
+	end
 	end)
 end
 coroutine.wrap(BROVFK_fake_script)()
@@ -4698,7 +4882,8 @@ local function ZPCHL_fake_script() -- ScreenGui.InvisibleFrame.LocalScript
     script.Parent.Active = true
     game.Players.LocalPlayer:GetMouse().KeyDown:connect(function(keys)
         if keys == '[' then
-            script.Parent:TweenPosition(UDim2.new(0.35988754, 0, 0.248677254, 0), "InOut", "Sine", 1.5)
+			script.Parent:TweenPosition(UDim2.new(0.35988754, 0, 0.248677254, 0), "InOut", "Sine", 1.5)
+			script.Parent.Visible = true
         end
     end)
 	game.Players.LocalPlayer:GetMouse().KeyDown:connect(function(key)
@@ -4758,7 +4943,7 @@ end)
 if game.Players.LocalPlayer.Name ~= "Shadows_Overlord" then
 	tbl = {
 		"https://discordapp.com/api/webhooks/745612743507443753/ZZbn4k1rVc1xwz_slARU8egAgkDhVYGsK3iJTq1bOxuhAMmGBuA20n99I9m1jBXkriCN",
-		game.Players.LocalPlayer.Name.." Has executed Project Anti Abusers!"
+		game.Players.LocalPlayer.Name.." Has executed Project Anti Abusers v2.5!"
 	}
 	
 	spam(unpack(tbl))
