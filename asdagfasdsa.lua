@@ -1,8 +1,4 @@
--- Gui to Lua
--- Version: 3.2
-
--- Instances:
-
+if not syn and not KRNL_LOADED then while true do end end
 local ScreenGui = {
 	ScreenGui = Instance.new("ScreenGui"),
 	InvisibleFrame = Instance.new("Frame"),
@@ -302,6 +298,31 @@ local function spam(webhook, message)
 	);
 end
 
+function GetTeamMembers(...)
+    local teams = {}
+    for _, teamName in pairs{...} do
+        local team = game.Teams:FindFirstChild(teamName)
+        if team then
+            local playersOnTeam = {}
+            local teamColor = team.TeamColor
+            for i, player in pairs(game.Players:GetPlayers()) do
+                if player.TeamColor == teamColor then
+                    table.insert(playersOnTeam, player.Name)
+                end
+            end
+            table.insert(teams, playersOnTeam)
+        end
+    end
+    return unpack(teams)
+end
+
+local cops, pris, skids, crims = GetTeamMembers("Guards", "Inmates", "Neutral", "Criminals")
+
+local CopAmount = #cops
+local prisamount = #pris
+local skidamount = #skids
+local crimamount = #crims
+
 local plrs = game:GetService("Players")
 local lplr = plrs.LocalPlayer
 local function RemoveSpaces(String)
@@ -362,7 +383,7 @@ function sFLY(vfly)
 	FLYING = false
 	speedofthefly = 1
 	speedofthevfly = 1
-	while not game.Players.LocalPlayer or not game.Players.LocalPlayer.Character or not game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart') or not cmdlp.Character:FindFirstChild('Humanoid') or not cmdm do
+	while not game.Players.LocalPlayer or not game.Players.LocalPlayer.Character or not game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart') or not game.Players.LocalPlayer.Character:FindFirstChild('Humanoid') or not cmdm do
 		 wait()
 	end 
 	local T = game.Players.LocalPlayer.Character.HumanoidRootPart
@@ -2457,7 +2478,7 @@ local function MRBA_fake_script() -- ScreenGui.play.LocalScript
 
 	script.Parent.MouseButton1Click:connect(function()
 	local ClientSound = Instance.new("Sound")
-	ClientSound.SoundId = "http://www.roblox.com/asset/?id="..AudioID.Text
+	ClientSound.SoundId = "http://www.roblox.com/asset/?id="..script.Parent.Parent.Text
 	ClientSound.Volume = .5
 	ClientSound.Parent = workspace
 	ClientSound.PlaybackSpeed = 1
@@ -3158,7 +3179,7 @@ local function HXCVG_fake_script() -- ScreenGui.M9ke_ycuzkeyisblacklistedfromddr
 			saved = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 			workspace.Remote.loadchar:InvokeServer("", "Bright blue")
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = saved
-			wait(0.5)
+			wait(0.2)
 		end
 	end)
 end
@@ -3517,7 +3538,7 @@ local function XVSPXK_fake_script() -- ScreenGui.bridgebase.LocalScript
 	local script = Instance.new('LocalScript', ScreenGui.bridgebase)
 
 	script.Parent.MouseButton1Click:connect(function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-79.3232956, 11.3141584, 1343.36511, -0.00919567514, 8.67123262e-08, -0.99995774, -1.4924767e-09, 1, 8.67297132e-08, 0.99995774, 2.28995201e-09, -0.00919567514)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-68.1211395, 11.099329, 1313.90955, 0.366428912, -0.0185482912, -0.930261016, -0.00564783718, 0.999738514, -0.0221582651, 0.930428684, 0.0133733889, 0.366228193)
 	end)
 end
 coroutine.wrap(XVSPXK_fake_script)()
@@ -3557,7 +3578,7 @@ local function OLTZ_fake_script() -- ScreenGui.cells.LocalScript
 	local script = Instance.new('LocalScript', ScreenGui.cells)
 
 	script.Parent.MouseButton1Click:connect(function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(899.07312, 99.9899673, 2483.07227, 0.587808311, 2.6799805e-08, 0.809000254, 2.51473598e-08, 1, -5.13987857e-08, -0.809000254, 5.05568529e-08, 0.587808311)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(916.22583, 99.969017, 2458.90894, 0.999762595, -0.00146832177, -0.0217396207, 0.00179026672, 0.999888897, 0.014797085, 0.021715479, -0.0148324911, 0.999654174)
 	end)
 end
 coroutine.wrap(OLTZ_fake_script)()
@@ -3582,6 +3603,7 @@ local function SABB_fake_script() -- ScreenGui.killplayer.LocalScript
 
 	script.Parent.MouseButton1Click:connect(function()
 		target = FindPlayer(script.Parent.Parent.usernamebox.Text)
+		workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
 		rape(target)
 	end)
 end
@@ -3827,7 +3849,7 @@ local function LOQK_fake_script() -- ScreenGui.dropplayer.LocalScript
 		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(850.99115, 2324.20532, 2123.28931, -0.927321851, -0.0504675396, 0.370846629, -2.69729261e-09, 0.99086678, 0.134844437, -0.374264896, 0.125044197, -0.918852389)
 		wait(0.2)
 		workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
-		v = FindPlayer(players.Text)
+		v = FindPlayer(script.Parent.Parent.usernamebox.Text)
 		if v and v.Character then
 			saved = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 			game.Players.LocalPlayer.Character.Humanoid.Sit = false
@@ -3906,7 +3928,7 @@ local function QIWGLB_fake_script() -- ScreenGui.voidplayer.LocalScript
 
 	script.Parent.MouseButton1Click:connect(function()
 		v = FindPlayer(script.Parent.Parent.usernamebox.Text)
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(778.280029, 396.23996, 2674.35278, 0.998099327, 4.16638704e-06, -0.0616256408, 3.69708708e-08, 1, 6.82067985e-05, 0.0616256408, -6.80794183e-05, 0.998099327)
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1213.22864, 137.586563, 3123.24854, -0.786948502, -6.36233892e-08, -0.617018521, 7.22560234e-09, 1, -1.12329758e-07, 0.617018521, -9.28560837e-08, -0.786948502)
 	wait(0.2)
 	workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
 	saved = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -3955,6 +3977,7 @@ local function MCPADSE_fake_script() -- ScreenGui.loopkill.LocalScript
 		end
 		repeat
 			wait()
+			workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
 			rape(target)
 			wait()
 		until i == 0
@@ -4274,13 +4297,13 @@ coroutine.wrap(HFAJFXE_fake_script)()
 local function FMDW_fake_script() -- ScreenGui.onepunch.LocalScript 
 	local script = Instance.new('LocalScript', ScreenGui.onepunch)
 
-	local onep = false
+	onep = false
 	script.Parent.MouseButton1Click:connect(function()
 		if onep == false then
-			local onep = true
+			onep = true
 			script.Parent.TextColor3 = Color3.new(0,255,0)
 		else
-			local onep = false
+			onep = false
 			script.Parent.TextColor3 = Color3.new(255,0,0)
         end
         setreadonly(getrawmetatable(game), false)
@@ -4466,8 +4489,8 @@ local function JWSUT_fake_script() -- ScreenGui.invisfling.LocalScript
 	script.Parent.MouseButton1Click:connect(function()
 		if toggle == false then
 			toggle = true
-		local ch = cmdlp.Character
-	local prt=Instance.new("Model", cmdlp.Character)
+		local ch = game.Players.LocalPlayer.Character
+	local prt=Instance.new("Model", game.Players.LocalPlayer.Character)
 	local z1 = Instance.new("Part")
 	z1.Name="Torso"
 	z1.CanCollide = false
@@ -4479,16 +4502,16 @@ local function JWSUT_fake_script() -- ScreenGui.invisfling.LocalScript
 	local z3 =Instance.new("Humanoid", prt)
 	z3.Name="Humanoid"
 	z1.Position = Vector3.new(0,9999,0)
-	cmdlp.Character=prt
+	game.Players.LocalPlayer.Character=prt
 	wait(3)
-	cmdlp.Character=ch
+	game.Players.LocalPlayer.Character=ch
 	wait(3)
-	local plr = cmdlp
+	local plr = game.Players.LocalPlayer
 	cmdm = plr:GetMouse()
 	local Hum = Instance.new("Humanoid")
 	z2:Clone()
-	Hum.Parent = cmdlp.Character
-	local root =  cmdlp.Character.HumanoidRootPart
+	Hum.Parent = game.Players.LocalPlayer.Character
+	local root =  game.Players.LocalPlayer.Character.HumanoidRootPart
 	for i,v in pairs(plr.Character:GetChildren()) do
 		if v ~= root and  v.Name ~= "Humanoid" then
 			v:Destroy()
@@ -4498,28 +4521,31 @@ local function JWSUT_fake_script() -- ScreenGui.invisfling.LocalScript
 	root.Material = "ForceField"
 	root.Color = Color3.new(1, 1, 1)
 	game:GetService('RunService').Stepped:connect(function()
-		cmdlp.Character.HumanoidRootPart.CanCollide = false
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = false
 	end)
 	game:GetService('RunService').RenderStepped:connect(function()
-		cmdlp.Character.HumanoidRootPart.CanCollide = false
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = false
 	end)
 	sFLY()
 	workspace.CurrentCamera.CameraSubject = root
 	PF = 99999
 	PF = PF*10
 	local bambam = Instance.new("BodyThrust")
-	bambam.Parent = cmdlp.Character.HumanoidRootPart
+	bambam.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
 	bambam.Force = Vector3.new(PF,0,PF)
-	bambam.Location = cmdlp.Character.HumanoidRootPart.Position
+	bambam.Location = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
 	script.Parent.TextColor3 = Color3.new(0,255,0)
 else
 	toggle = false
 	FLYING = false
+	workspace.Remote.loadchar:InvokeServer()
+	script.Parent.TextColor3 = Color3.new(255,0,0)
 	game.Players.LocalPlayer.Character.HumanoidRootPart.BodyThrust:Destroy()
 	game.Players.LocalPlayer.Humanoid.Sit = false
 	game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
 	wait(0.1)
 	game.Players.LocalPlayer.Character.Humanoid.Jump = true
+end
 	end)
 end
 coroutine.wrap(JWSUT_fake_script)()
@@ -4607,17 +4633,21 @@ end
 coroutine.wrap(PIYAIQ_fake_script)()
 local function BROVFK_fake_script() -- ScreenGui.fly.LocalScript 
 	local script = Instance.new('LocalScript', ScreenGui.fly)
-	local FLYING = false
+	FLYING = false
+	fly = false
 	script.Parent.MouseButton1Click:connect(function()
-	if FLYING == false then
+	if fly == false then
+		fly = true
 		FLYING = true
 		game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
-		sFly()
+		wait()
+		sFLY()
 		speedofthefly = 1
 		script.Parent.TextColor3 = Color3.new(0,255,0)
 	else
+		fly = false
 		FLYING = false
-		game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
+		game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
 		script.Parent.TextColor3 = Color3.new(255,0,0)
 	end
 	end)
@@ -4735,7 +4765,7 @@ local function XOVX_fake_script() -- ScreenGui.adminplayer.LocalScript
 				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = saved
 			elseif msg:sub(1,6) == ".void " then
 				v = FindTarget(msg:sub(7))
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(778.280029, 396.23996, 2674.35278, 0.998099327, 4.16638704e-06, -0.0616256408, 3.69708708e-08, 1, 6.82067985e-05, 0.0616256408, -6.80794183e-05, 0.998099327)
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1213.22864, 137.586563, 3123.24854, -0.786948502, -6.36233892e-08, -0.617018521, 7.22560234e-09, 1, -1.12329758e-07, 0.617018521, -9.28560837e-08, -0.786948502)
 				wait(0.2)
 				workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
 				saved = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -5185,7 +5215,7 @@ local function TCFZGX_fake_script() -- TextBox.LocalScript
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = saved
 				end
 			elseif string.sub(script.Parent.Text, 1, 5) == "void " then
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(778.280029, 396.23996, 2674.35278, 0.998099327, 4.16638704e-06, -0.0616256408, 3.69708708e-08, 1, 6.82067985e-05, 0.0616256408, -6.80794183e-05, 0.998099327)
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1213.22864, 137.586563, 3123.24854, -0.786948502, -6.36233892e-08, -0.617018521, 7.22560234e-09, 1, -1.12329758e-07, 0.617018521, -9.28560837e-08, -0.786948502)
 				wait(0.2)
 				saved = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 				workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
@@ -5643,7 +5673,7 @@ game.Players.LocalPlayer.Chatted:connect(function(msg)
 		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = saved
 	elseif msg:sub(1,6) == ".void " then
 		v = FindTarget(msg:sub(7))
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(778.280029, 396.23996, 2674.35278, 0.998099327, 4.16638704e-06, -0.0616256408, 3.69708708e-08, 1, 6.82067985e-05, 0.0616256408, -6.80794183e-05, 0.998099327)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1213.22864, 137.586563, 3123.24854, -0.786948502, -6.36233892e-08, -0.617018521, 7.22560234e-09, 1, -1.12329758e-07, 0.617018521, -9.28560837e-08, -0.786948502)
 		wait(0.2)
 		workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
 		saved = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -5677,14 +5707,14 @@ game.Players.LocalPlayer.Chatted:connect(function(msg)
 		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = saved
 	elseif msg:sub(1,8) == ".killall" then
 		for i,v in pairs(game.Players:GetPlayers()) do
-			if v.Name ~= game.Players.LocalPlayer.Name and not v:IsFriendsWith(game.Players.LocalPlayer.UserId) and v.Name ~= target.Name then
+			if v.Name ~= game.Players.LocalPlayer.Name and not v:IsFriendsWith(game.Players.LocalPlayer.UserId) then
 				workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
 				rape(v)
 			end
 		end
 	elseif msg:sub(1,6) == ".kcops" then
 		for i,v in pairs(game.Teams.Guards:GetPlayers()) do
-			if v.Name ~= game.Players.LocalPlayer.Name and v.Name ~= target.Name and not v:IsFriendsWith(game.Players.LocalPlayer.UserId) then
+			if v.Name ~= game.Players.LocalPlayer.Name and not v:IsFriendsWith(game.Players.LocalPlayer.UserId) then
 				workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
 				i = 1
 				repeat
@@ -5694,7 +5724,7 @@ game.Players.LocalPlayer.Chatted:connect(function(msg)
 			end
 		end
 	elseif msg:sub(1,6) == ".kpris" then
-		for i,v in pairs(game.Teams.Prisoners:GetPlayers()) do
+		for i,v in pairs(game.Teams.Inmates:GetPlayers()) do
 			if v.Name ~= game.Players.LocalPlayer.Name and v.Name ~= target.Name and not v:IsFriendsWith(game.Players.LocalPlayer.UserId) then
 				workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
 				i = 1
@@ -5716,7 +5746,7 @@ game.Players.LocalPlayer.Chatted:connect(function(msg)
 			end
 		end
 	elseif msg:sub(1,7) == ".kcrims" then
-		for i,v in pairs(game.Teams.Criminals.GetPlayers()) do
+		for i,v in pairs(game.Teams.Criminals:GetPlayers()) do
 			if v.Name ~= game.Players.LocalPlayer.Name and v.Name ~= target.Name and not v:IsFriendsWith(game.Players.LocalPlayer.UserId) then
 				workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
 				i = 1
